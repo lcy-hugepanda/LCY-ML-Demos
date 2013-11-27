@@ -16,8 +16,6 @@
 % Based on PRTools5 (www.37steps.com)
 % Copyright: Robert P.W. Duin, prtools@rduin.nl
 
-%±´
-
 A = gendatb([50, 150]);
 A = setprior(A,[]);
 scatterd(A);
