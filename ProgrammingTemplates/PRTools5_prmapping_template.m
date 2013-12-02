@@ -48,6 +48,9 @@ elseif mapping_task(argin,'training')
     %
     % [TO DO: You code here. Implement the training of this prmapping.]
 	%
+	% Some frequently used code phases:
+	%  [numInstances,numAttributes,numClasses] = getsize(A);
+	%
     % the following code block is a dummy example (simplist ZeroR), just
     % delete it when use this template file for your own purpose
     num_classes = size(a, 2);
