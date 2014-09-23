@@ -51,6 +51,9 @@ elseif mapping_task(argin,'training')
         cycle = 1: 1 : numInstances;
     end
     w = zeros(1, numAttributes+1); 
+    w_archive = cell(0);
+    w_archive_idx = 1;
+    example_update = [];
     
     % Training Loop
     trainingDataset = A;
@@ -66,7 +69,11 @@ elseif mapping_task(argin,'training')
         for i = 1 : 1 : numInstances
             idx = cycle(i);
             if (pla_sign(w*x(idx,:)') * y(idx) == -1)
-                w = w + learningRate * (y(idx)*x(idx,:)')';
+                w_archive{w_archive_idx} = w;
+                example_update(w_archive_idx) = idx;
+                w_archive_idx = w_archive_idx + 1;
+                
+                w = w + learningRate * (y(idx)*x(idx,:)')'; % update of PLA
                 numUpdate = numUpdate + 1;
                 isNoError = false;
                 % Just for Pocket-PLA
@@ -95,7 +102,9 @@ elseif mapping_task(argin,'training')
                                     
     % Construct output
     data.w = w;
+    data.w_archive = w_archive;
     data.numUpdate = numUpdate;
+    data.example_update = example_update;
     out = trained_classifier(trainingDataset, data);
 
 % Execution Path C: Testing
